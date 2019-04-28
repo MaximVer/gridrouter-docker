@@ -1,0 +1,36 @@
+---
+grid_router_version: 1.6.4 # Install GridRouter version
+grid_router_path: /etc/grid-router # Path to GridRouter
+grid_router_qouta_path: /etc/grid-router/quota # Path to GridRouter quota
+grid_router_qouta_user: selenoid # GridRouter quota user
+grid_router_time_zone: America/New_York # Timezone in container
+grid_router_port: 4444 # GridRouter port
+grid_router_sctl_version: 1.4.0 # sctl version — https://github.com/seleniumkit/sctl/releases
+grid_router_host_list: group # Host list for selenoid.xml
+
+grid_router_regions: # Hosts list per region
+  - name: "region-1"
+    hosts:
+      - name: localhost
+        port: 4444
+        browser_count: 5
+
+grid_router_browsers: # Browser list usage selenoid
+  - name: "firefox"
+    defaultVersion: "66.0"
+    versions:
+      - "66.0"
+      - "65.0"
+      - "64.0"
+  - name: "chrome"
+    defaultVersion: "73.0"
+    versions:
+      - "73.0"
+      - "72.0"
+      - "71.0"
+  - name: "opera"
+    defaultVersion: "60.0"
+    versions:
+      - "60.0"
+      - "58.0"
+      - "57.0"

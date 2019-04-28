@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - robertdebock.python_pip
+    - { role: ../../gridrouter-docker }

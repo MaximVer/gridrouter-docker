@@ -1,0 +1,20 @@
+---
+- hosts: maxver_gcp_ggr-2
+  vars:
+    grid_router_path: "{{ ansible_env.HOME }}/grid-router"
+    grid_router_qouta_path: "{{ ansible_env.HOME }}/grid-router/quota"
+    grid_router_port: 4445
+
+    grid_router_regions:
+      - name: "region-1"
+        hosts:
+          - name: 35.229.118.236
+            port: 4444
+            browser_count: 3
+          - name: 34.74.96.194
+            port: 4444
+            browser_count: 3
+  roles:
+    - geerlingguy.docker
+    - robertdebock.python_pip
+    - { role: ../gridrouter-docker }
