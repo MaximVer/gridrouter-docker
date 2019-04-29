@@ -42,3 +42,37 @@
     ports:
     - "{{ grid_router_port }}:{{ grid_router_port }}"
     entrypoint: ["/usr/bin/ggr", "-listen", ":4444", "-quotaDir", "{{ grid_router_qouta_path }}", "-guests-allowed", "-guests-quota", "{{ grid_router_qouta_user }}"]
+
+- name: Grid Router UI | Run Grid Router UI container
+  docker_container:
+    name: ggr-ui
+    restart_policy: always
+    detach: yes
+    image: "aerokube/ggr-ui:{{ grid_router_ui_version }}"
+    state: started
+    volumes:
+      - "{{ ansible_env.HOME }}/grid-router/:/etc/grid-router:ro"
+    ports:
+      - "8888:8888"
+
+- name: Selenoid UI | Check selenoid UI container exist
+  shell: "docker ps -aq --filter \"name={{ item }}\""
+  with_items:
+    - "selenoid-ui"
+  register: found_containers
+
+- name: Selenoid UI | Remove selenoid UI container if exist
+  shell: "docker stop {{ item.item }} && docker rm -fv {{ item.item }}"
+  with_items: "{{ found_containers.results }}"
+  when: item.stdout
+
+- name: Selenoid UI | Start selenoid UI
+  docker_container:
+    name: cm
+    image: "aerokube/cm:{{ cm_version }}"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/root:/root"
+    command: >
+      selenoid-ui start
+        --force

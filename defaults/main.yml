@@ -34,3 +34,6 @@ grid_router_browsers: # Browser list usage selenoid
       - "60.0"
       - "58.0"
       - "57.0"
+
+grid_router_ui_version: 1.1.2 # Install GridRouter UI version
+cm_version: 1.5.7 # Install configuration manager version
