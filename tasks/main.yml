@@ -3,7 +3,7 @@
   pip:
     name: "{{ item.name }}"
   with_items:
-  - { name: docker }
+    - { name: docker }
 
 - name: Grid Router | Download sctl
   get_url:
@@ -36,11 +36,11 @@
     network_mode: host
     state: started
     volumes:
-    - "{{ grid_router_path }}:{{ grid_router_path }}:ro"
+      - "{{ grid_router_path }}:{{ grid_router_path }}:ro"
     env:
       TZ: "{{ grid_router_time_zone }}"
     ports:
-    - "{{ grid_router_port }}:{{ grid_router_port }}"
+      - "{{ grid_router_port }}:{{ grid_router_port }}"
     entrypoint: ["/usr/bin/ggr", "-listen", ":4444", "-quotaDir", "{{ grid_router_qouta_path }}", "-guests-allowed", "-guests-quota", "{{ grid_router_qouta_user }}"]
 
 - name: Grid Router UI | Run Grid Router UI container
@@ -51,7 +51,7 @@
     image: "aerokube/ggr-ui:{{ grid_router_ui_version }}"
     state: started
     volumes:
-      - "{{ ansible_env.HOME }}/grid-router/:/etc/grid-router:ro"
+      - "{{ grid_router_path }}:/etc/grid-router:ro"
     ports:
       - "8888:8888"
 
